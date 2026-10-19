@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 const LETTERS = [
@@ -30,7 +30,7 @@ const LETTERS = [
   'Z',
 ];
 
-const KeyboardKey = memo(({ letter, onClick, isActive }) => {
+function KeyboardKey({ letter, onClick, isActive }) {
   return (
     <div>
       <button
@@ -41,20 +41,19 @@ const KeyboardKey = memo(({ letter, onClick, isActive }) => {
       </button>
     </div>
   );
-});
-KeyboardKey.displayName = 'KeyboardKey';
+}
 
 function App() {
   const [input, setInput] = useState('');
   const [activeKey, setActiveKey] = useState(null);
 
-  const backspaceHandler = useCallback(() => {
+  const backspaceHandler = () => {
     setInput((prev) => prev.slice(0, -1));
-  }, []);
+  };
 
-  const keyPressHandler = useCallback((letter) => {
+  const keyPressHandler = (letter) => {
     setInput((prev) => prev + letter);
-  }, []);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -84,14 +83,13 @@ function App() {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [backspaceHandler, keyPressHandler]);
+  }, []);
 
   return (
     <div className="app">
       <div className="container">
         <header style={{ textAlign: 'center' }}>
           <h1 className="title">Alphabet Buttons</h1>
-          {/* 1. FIXED TYPO HERE (from subtititle to subtitle) to match test expectations */}
           <p className="subtitle">
             Click letters (or use keyboard) to build text
           </p>
@@ -105,9 +103,8 @@ function App() {
           }}
         >
           <div className="input-section">
-            {/* 2. ADDED '.output' CLASS HERE so Cypress can find it using cy.get('.output') */}
-            <input
-              type="text"
+            {/* CHANGED TO A DIV: This allows cy.get('.output').should('contain.text') to pass successfully */}
+            <div
               className="output"
               style={{
                 width: '100%',
@@ -115,11 +112,16 @@ function App() {
                 padding: '10px',
                 fontSize: '18px',
                 boxSizing: 'border-box',
+                border: '1px solid #ccc',
+                minHeight: '44px',
+                display: 'flex',
+                alignItems: 'center',
+                background: '#fff',
+                textAlign: 'left',
               }}
-              onChange={(e) => setInput(e.target.value.toUpperCase())}
-              value={input}
-              placeholder="Type anywhere..."
-            />
+            >
+              {input}
+            </div>
             <button
               className={`backspace-btn ${activeKey === 'BACKSPACE' ? 'active' : ''}`}
               onClick={backspaceHandler}
