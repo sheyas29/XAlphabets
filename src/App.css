@@ -1,0 +1,78 @@
+.app {
+  min-height: 100vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background-color: #f9f9f9;
+}
+.container {
+  max-width: 700px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  gap: 10px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+.keyboard {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+.key {
+  max-width: 200px;
+  min-width: 50px;
+  aspect-ratio: 1/1;
+  font-weight: bolder;
+  background-color: white;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  font-size: large;
+  cursor: pointer;
+  transition:
+    background-color 0.1s,
+    transform 0.05s;
+}
+
+/* Hover and Action states */
+.key:hover,
+.backspace-btn:hover {
+  background-color: #f0f0f0;
+}
+
+/* This lights up the button on real physical keyboard clicks or direct active mouse presses */
+.key.active,
+.key:active,
+.backspace-btn.active,
+.backspace-btn:active {
+  background-color: #0070f3 !important;
+  color: white;
+  border-color: #0070f3;
+  transform: scale(0.95);
+}
+
+.input-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+.backspace-btn {
+  max-width: fit-content;
+  border-radius: 5px;
+  padding: 10px 20px;
+  background-color: white;
+  border: 1px solid #bbb;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background-color 0.1s,
+    transform 0.05s;
+}
